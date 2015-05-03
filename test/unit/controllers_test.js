@@ -14,7 +14,7 @@ describe('Compare controllers', function() {
   beforeEach(module('compareApp'));
 
   describe('InitController', function() {
-    var scope, ctrl, $httpBackend;
+    var scope, ctrl;
 
     beforeEach(inject(function($rootScope, $controller) {
       scope = $rootScope.$new();
