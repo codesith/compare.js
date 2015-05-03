@@ -9,7 +9,7 @@ config(['$routeProvider', function($routeProvider) {
   $routeProvider.
     when('/init', {
       templateUrl: 'partials/init.html',
-      controller: 'InitCtrl'
+      controller: 'InitController'
     })
     .otherwise({redirectTo: '/init'});
 }]);

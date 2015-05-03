@@ -2,6 +2,7 @@
 
 var compareControllers = angular.module('compareControllers', []);
 
-compareControllers.controller('InitCtrl', [function() {
-
-}]);
+compareControllers.controller('InitController', ['$scope',
+  function($scope) {
+    $scope.str = 'Hello world!';
+  }]);
