@@ -10,6 +10,10 @@ config(['$routeProvider', function($routeProvider) {
     when('/init', {
       templateUrl: 'partials/init.html',
       controller: 'InitController'
-    })
-    .otherwise({redirectTo: '/init'});
+    }).
+    when('/compare', {
+      templateUrl: 'partials/compare.html',
+      controller: 'CompareController'
+    }).
+    otherwise({redirectTo: '/init'});
 }]);

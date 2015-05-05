@@ -1,1 +1,13 @@
-<p>{{str}}</p>
+<hot-table
+  settings="{contextMenu: ['row_above', 'row_below', 'remove_row', 'col_right', 'col_left', 'remove_col']}"
+  colHeaders="colHeaders"
+  minSpareRows="minSpareRows"
+  datarows="db.items"
+  height="300"
+  width="700"
+
+  afterChange: afterChange>
+</hot-table>
+<button ng-click="compare()">
+  Compare
+</button>

@@ -21,8 +21,10 @@ describe('Compare controllers', function() {
       ctrl = $controller('InitController', {$scope: scope});
     }));
 
-    it('Should pass in str', function() {
-      expect(scope.str).toEqual("Hello world!");
+    it('Check initial compare table, 1 header row and 3 empty rows', function() {
+      expect(scope.db.items.length).toEqual(4);
+      expect(scope.db.items[0][1]).toEqual('Attribute 1');
+      expect(scope.db.items[1][0]).toEqual('Item 1');
     });
 
   });
