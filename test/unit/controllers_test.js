@@ -22,9 +22,9 @@ describe('Compare controllers', function() {
     }));
 
     it('Check initial compare table, 1 header row and 3 empty rows', function() {
-      expect(scope.db.items.length).toEqual(4);
-      expect(scope.db.items[0][1]).toEqual('Attribute 1');
-      expect(scope.db.items[1][0]).toEqual('Item 1');
+      expect(scope.db.items.length).toEqual(14);
+      expect(scope.db.items[0][1]).toEqual('Horsepower');
+      expect(scope.db.items[1][0]).toEqual('Audi S4');
     });
 
   });

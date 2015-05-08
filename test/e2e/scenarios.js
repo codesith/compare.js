@@ -17,13 +17,13 @@ describe('CompareJS App', function() {
     });
 
 
-    it('should render init view with 4x4 table', function() {
+    it('should render init view with default data', function() {
       var table = $('[ng-view] div table');
       var tds = table.all(by.css('td'));
-      expect(tds.count()).toMatch(20);
+      expect(tds.count()).toMatch(105);
       expect(tds.get(0).getText()).toMatch('');
-      expect(tds.get(1).getText()).toMatch('Attribute 1');
-      expect(tds.get(4).getText()).toMatch('Item 1');
+      expect(tds.get(1).getText()).toMatch('Horsepower');
+      expect(tds.get(7).getText()).toMatch('Audi S4');
     });
 
   });
