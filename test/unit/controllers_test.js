@@ -30,9 +30,9 @@ describe('Compare controllers', function() {
     it('Check normalize function', function() {
       $scope.db.items = [
         ['', 'Horspower', 'MSRP'],
-        ['Car 1', 1, 3],
+        ['Car 1', 1, 8],
         ['Car 2', 1, 5],
-        ['Car 3', 2, 8]
+        ['Car 3', 2, 3]
         ];
       $scope.normalize();
       expect($scope.db.attributes).toEqual([
@@ -41,24 +41,24 @@ describe('Compare controllers', function() {
       ]);
       expect($scope.db.normalizedData).toEqual([
         ['', 'Horspower', 'MSRP'],
-        ['Car 1', 0, 0],
-        ['Car 2', 0, 0.4],
-        ['Car 3', 1, 1]
+        ['Car 1', -0.3333, 0.5333],
+        ['Car 2', -0.3333, -0.0667],
+        ['Car 3', 0.6667, -0.4667]
       ]);
     });
 
     it('Check score function', function() {
       $scope.db.items = [
         ['', 'Horspower', 'MSRP'],
-        ['Car 1', 1, 3],
+        ['Car 1', 1, 8],
         ['Car 2', 1, 5],
-        ['Car 3', 2, 8]
+        ['Car 3', 2, 3]
         ];
       $scope.normalize();
       expect($scope.db.scores).toEqual([
-        {name:'Car 1', score: 0},
-        {name:'Car 2', score: 0.4},
-        {name:'Car 3', score: 2}
+        {name:'Car 1', score: 0.2},
+        {name:'Car 2', score: -0.4},
+        {name:'Car 3', score: 0.2}
       ]);
       // change attribute weight
       $scope.db.attributes = [
@@ -67,9 +67,9 @@ describe('Compare controllers', function() {
       ];
       $scope.score();
       expect($scope.db.scores).toEqual([
-        {name:'Car 1', score: 0},
-        {name:'Car 2', score: 0.8},
-        {name:'Car 3', score: 7}
+        {name:'Car 1', score: -0.5999},
+        {name:'Car 2', score: -1.7999},
+        {name:'Car 3', score: 2.4001}
       ]);
     });
   });

@@ -31,32 +31,47 @@ compareControllers.controller('InitController', ['$scope',
     };
 
     $scope.normalize = function() {
-      var data = $scope.db.items.slice(0);
-      // remove the headers
-      data.shift();
+      var data = new Array();
+      // remove the headers and leading columns
+      var cols = jStat.cols($scope.db.items);
+      var rows = jStat.rows($scope.db.items);
+      var x = 1;
+      var y = 1;
+      var aRow = new Array();
+      for(; x<rows; x++) {
+        aRow = new Array();
+        y = 1;
+        for(; y<cols; y++) {
+          aRow.push(Number($scope.db.items[x][y]));
+        }
+        data.push(aRow);
+      }
 
       // normalizing
       // find min and max for each column
       console.log('data', data);
-      var mins = jStat.min(data);
-      var maxes = jStat.max(data);
+      var mins = jStat(data).min();
+      var maxes = jStat(data).max();
+      var means = jStat(data).mean();
       console.log('mins', mins);
-      console.log('max', maxes);
+      console.log('maxes', maxes);
+      console.log('means', means);
 
       // create normalized table
       $scope.db.normalizedData = new Array();
-      var cols = jStat.cols(data);
-      var rows = jStat.rows(data);
-      var x = 0;
+      cols = jStat.cols(data);
+      rows = jStat.rows(data);
+      x = 0;
       for(; x < rows; x++) {
-        var aRow = new Array();
-        aRow.push(data[x][0]);
-        var y = 1;
+        aRow = new Array();
+        aRow.push($scope.db.items[x+1][0]);
+        y = 0;
         for(; y < cols; y++) {
           var value = data[x][y];
           var min = mins[y];
           var max = maxes[y];
-          var normalizedValue = (value-min)/(max-min);
+          var mean = means[y];
+          var normalizedValue = Number(((value-mean)/(max-min)).toFixed(4));
           aRow.push(normalizedValue);
         }
         $scope.db.normalizedData.push(aRow);
@@ -92,7 +107,7 @@ compareControllers.controller('InitController', ['$scope',
           var weight = $scope.db.attributes[y-1].weight;
           score += value*weight;
         }
-        $scope.db.scores.push({name:data[x][0], score:score});
+        $scope.db.scores.push({name:data[x][0], score:Number(score.toFixed(4))});
       }
       console.log('scores', $scope.db.scores);
     };
