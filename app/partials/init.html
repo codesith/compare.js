@@ -1,4 +1,5 @@
 <hot-table
+  id="items"
   settings="{contextMenu: ['row_above', 'row_below', 'remove_row', 'col_right', 'col_left', 'remove_col']}"
   colHeaders="colHeaders"
   minSpareRows="minSpareRows"
@@ -6,8 +7,12 @@
   height="400"
   width="700"
 
-  afterChange: afterChange>
+  afterChange: afterItemsChange>
 </hot-table>
+<div ng-repeat="attribute in db.attributes" style="width:600px">
+    <div style="width:xi4600px">{{attribute}}</div>
+    <div style="width:100px;">1</div>
+</div>
 <button ng-click="compare()">
   Compare
 </button>

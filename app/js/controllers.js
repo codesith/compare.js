@@ -26,8 +26,8 @@ compareControllers.controller('InitController', ['$scope',
       ['BMW 535i X',302,69675.00,5.30,193.4,73.2,35.30]
     ];
 
-    $scope.afterChange = function() {
-      console.log('afterChange', $scope.db.items);
+    $scope.afterItemsChange = function() {
+      console.log('afterItemsChange', $scope.db.items);
     };
 
     $scope.compare = function() {
@@ -63,6 +63,19 @@ compareControllers.controller('InitController', ['$scope',
       }
       normalizedData.unshift($scope.db.items[0]);
       console.log(normalizedData);
+
+      // create attribute list
+      $scope.db.attributes=new Array();
+      var length = $scope.db.items[0].length;
+      var i = 1;
+      for(; i < length; i++) {
+        $scope.db.attributes.push($scope.db.items[0][i]);
+      }
+      console.log($scope.db.attributes);
     }
+
+    $scope.afterAttributesChange = function() {
+      console.log('afterAttributesChange', $scope.db.attributes);
+    };
   }
 ]);
