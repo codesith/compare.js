@@ -1,12 +1,12 @@
 'use strict';
 
 var compareControllers = angular.module('compareControllers', [
-  'ngHandsontable'
+  'ngHandsontable', 'ui.bootstrap'
 ]);
 
 compareControllers.controller('InitController', ['$scope',
   function($scope) {
-    $scope.minSpareRows = 1;
+    $scope.minSpareRows = 0;
     $scope.colHeaders = false;
     $scope.db = {};
     $scope.db.items = [
@@ -30,21 +30,21 @@ compareControllers.controller('InitController', ['$scope',
       console.log('afterItemsChange', $scope.db.items);
     };
 
-    $scope.compare = function() {
-      var data = $.merge([],$scope.db.items);
-      // remove the header
+    $scope.normalize = function() {
+      var data = $scope.db.items.slice(0);
+      // remove the headers
       data.shift();
-      data.pop();
 
       // normalizing
       // find min and max for each column
+      console.log('data', data);
       var mins = jStat.min(data);
       var maxes = jStat.max(data);
-      console.log(mins);
-      console.log(maxes);
+      console.log('mins', mins);
+      console.log('max', maxes);
 
       // create normalized table
-      var normalizedData = new Array();
+      $scope.db.normalizedData = new Array();
       var cols = jStat.cols(data);
       var rows = jStat.rows(data);
       var x = 0;
@@ -53,29 +53,50 @@ compareControllers.controller('InitController', ['$scope',
         aRow.push(data[x][0]);
         var y = 1;
         for(; y < cols; y++) {
-          var value=data[x][y];
-          var min=mins[y];
-          var max=maxes[y];
+          var value = data[x][y];
+          var min = mins[y];
+          var max = maxes[y];
           var normalizedValue = (value-min)/(max-min);
           aRow.push(normalizedValue);
         }
-        normalizedData.push(aRow);
+        $scope.db.normalizedData.push(aRow);
       }
-      normalizedData.unshift($scope.db.items[0]);
-      console.log(normalizedData);
+      $scope.db.normalizedData.unshift($scope.db.items[0]);
+      console.log('normalizedData', $scope.db.normalizedData);
 
       // create attribute list
-      $scope.db.attributes=new Array();
+      $scope.db.attributes = new Array();
       var length = $scope.db.items[0].length;
       var i = 1;
       for(; i < length; i++) {
-        $scope.db.attributes.push($scope.db.items[0][i]);
+        $scope.db.attributes.push({"name":$scope.db.items[0][i], "weight":1});
       }
-      console.log($scope.db.attributes);
+      console.log('attributes',$scope.db.attributes);
+      $scope.score();
     }
 
-    $scope.afterAttributesChange = function() {
-      console.log('afterAttributesChange', $scope.db.attributes);
+    $scope.score = function() {
+      var data = $scope.db.normalizedData.slice(0);
+      // remove the headers
+      data.shift();
+
+      $scope.db.scores = new Array();
+      var cols = jStat.cols(data);
+      var rows = jStat.rows(data);
+      var x = 0;
+      for(; x < rows; x++) {
+        var y = 1;
+        var score = 0;
+        for(; y < cols; y++) {
+          var value = data[x][y];
+          var weight = $scope.db.attributes[y-1].weight;
+          score += value*weight;
+        }
+        $scope.db.scores.push({name:data[x][0], score:score});
+      }
+      console.log('scores', $scope.db.scores);
     };
+
+
   }
 ]);

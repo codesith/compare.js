@@ -9,10 +9,22 @@
 
   afterChange: afterItemsChange>
 </hot-table>
-<div ng-repeat="attribute in db.attributes" style="width:600px">
-    <div style="width:xi4600px">{{attribute}}</div>
-    <div style="width:100px;">1</div>
-</div>
-<button ng-click="compare()">
+<button ng-click="normalize()">
   Compare
 </button>
+<table class="table" style="width:250px">
+  <tr ng-repeat="attribute in db.attributes track by $index">
+    <td style="width:150px">{{attribute.name}}</td>
+    <td style="width:100px;">
+      <div style="float:left;padding-right:5px">-</div>
+      <div style="float:left"><input style="width:20px" ng-model="attribute.weight"></div>
+      <div style="padding-left:5px">+</div>
+    </td>
+  </tr>
+</table>
+<table class="table" style="width:250px">
+  <tr ng-repeat="item in db.scores">
+    <td style="width:150px">{{item.name}}</td>
+    <td style="width:100px;">{{item.score}}></td>
+  </tr>
+</table>
