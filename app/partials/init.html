@@ -1,0 +1,48 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <hot-table
+        id="items"
+        settings="{contextMenu: ['row_above', 'row_below', 'remove_row', 'col_right', 'col_left', 'remove_col']}"
+        colHeaders="colHeaders"
+        minSpareRows="minSpareRows"
+        datarows="db.items"
+        height="400"
+        width="700"
+        afterChange: afterChange
+        afterRemoveRow: afterRemoveRow
+        afterRemoveCol: afterRemoveCol
+        >
+      </hot-table>
+    </div>
+    <div class="col-md-3">
+      <ul>
+        <li ng-repeat="item in db.scores | orderBy:'-score'">
+          <p>{{item.name}}</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <span>Comparision tool</span>
+      <table class="table">
+        <tr>
+          <th> </th>
+          <th>Want larger or smaller? (click to toggle)</th>
+          <th>How important? (0 to 5)</th>
+        </tr>
+        <tr ng-repeat="attribute in db.attributes track by $index">
+          <td>{{attribute.name}}</td>
+          <td><a style="cursor:pointer;" ng-click="toggleAttributeOrder($index)">{{attribute.order}}</a></td>
+          <td>
+            <div style="float:left;padding-right:5px"><a style="cursor:pointer;" ng-click="decreaseWeight($index)">-</a></div>
+            <div style="float:left;width:30px;"><p style="cursor:pointer;" align="center">{{attribute.weight}}<p/></div>
+            <div style="padding-left:5px"><a style="cursor:pointer;" ng-click="increaseWeight($index)">+</a></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
