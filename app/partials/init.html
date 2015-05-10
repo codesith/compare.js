@@ -17,7 +17,7 @@
     </div>
     <div class="col-md-3">
       <ul>
-        <li ng-repeat="item in db.scores | orderBy:'score'">
+        <li ng-repeat="item in db.scores | orderBy:'-score'">
           <p>{{item.name}}</p>
         </li>
       </ul>
@@ -35,11 +35,11 @@
         </tr>
         <tr ng-repeat="attribute in db.attributes track by $index">
           <td>{{attribute.name}}</td>
-          <td><a ng-click="toggleAttributeOrder($index)">{{attribute.order}}</a></td>
+          <td><a style="cursor:pointer;" ng-click="toggleAttributeOrder($index)">{{attribute.order}}</a></td>
           <td>
-            <div style="float:left;padding-right:5px"><a ng-click="decreaseWeight($index)">-</a></div>
-            <div style="float:left"><input style="width:20px" ng-model="attribute.weight"></div>
-            <div style="padding-left:5px"><a ng-click="increaseWeight($index)">+</a></div>
+            <div style="float:left;padding-right:5px"><a style="cursor:pointer;" ng-click="decreaseWeight($index)">-</a></div>
+            <div style="float:left;width:30px;"><p style="cursor:pointer;" align="center">{{attribute.weight}}<p/></div>
+            <div style="padding-left:5px"><a style="cursor:pointer;" ng-click="increaseWeight($index)">+</a></div>
           </td>
         </tr>
       </table>

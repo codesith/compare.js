@@ -155,7 +155,5 @@ compareControllers.controller('InitController', ['$scope',
         $scope.score();
       }
     };
-
-    //$scope.normalize();
   }
 ]);
