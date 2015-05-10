@@ -1,7 +1,7 @@
 'use strict';
 
 var compareControllers = angular.module('compareControllers', [
-  'ngHandsontable', 'ui.bootstrap'
+  'ngHandsontable'
 ]);
 
 compareControllers.controller('InitController', ['$scope',
@@ -26,9 +26,21 @@ compareControllers.controller('InitController', ['$scope',
       ['BMW 535i X',302,69675.00,5.30,193.4,73.2,35.30]
     ];
 
-    $scope.afterItemsChange = function() {
-      console.log('afterItemsChange', $scope.db.items);
+    $scope.afterChange = function() {
+      console.log('afterChange', $scope.db.items);
+      $scope.normalize();
+      if(!$scope.$$phase) {
+        $scope.$apply();
+      }
     };
+
+    $scope.afterRemoveRow = function() {
+      $scope.afterChange();
+    }
+
+    $scope.afterRemoveCol = function() {
+      $scope.afterChange();
+    }
 
     $scope.normalize = function() {
       var data = new Array();
@@ -84,7 +96,11 @@ compareControllers.controller('InitController', ['$scope',
       var length = $scope.db.items[0].length;
       var i = 1;
       for(; i < length; i++) {
-        $scope.db.attributes.push({"name":$scope.db.items[0][i], "weight":1});
+        $scope.db.attributes.push({
+          "name":$scope.db.items[0][i],
+          "weight":1,
+          "order":"larger"
+        });
       }
       console.log('attributes',$scope.db.attributes);
       $scope.score();
@@ -105,13 +121,41 @@ compareControllers.controller('InitController', ['$scope',
         for(; y < cols; y++) {
           var value = data[x][y];
           var weight = $scope.db.attributes[y-1].weight;
-          score += value*weight;
+          if ($scope.db.attributes[y-1].order == "smaller") {
+            score -= value*weight;
+          } else {
+            score += value*weight;
+          }
         }
         $scope.db.scores.push({name:data[x][0], score:Number(score.toFixed(4))});
       }
       console.log('scores', $scope.db.scores);
     };
 
+    $scope.toggleAttributeOrder = function(index) {
+      console.log("toggleAttributeOrder", $scope.db.attributes[index].order);
+      if ($scope.db.attributes[index].order == "smaller") {
+        $scope.db.attributes[index].order = "larger";
+      } else {
+        $scope.db.attributes[index].order = "smaller";
+      }
+      $scope.score();
+    };
 
+    $scope.decreaseWeight = function(index) {
+      if ($scope.db.attributes[index].weight > 0) {
+        $scope.db.attributes[index].weight--;
+        $scope.score();
+      }
+    };
+
+    $scope.increaseWeight = function(index) {
+      if ($scope.db.attributes[index].weight < 5) {
+        $scope.db.attributes[index].weight++;
+        $scope.score();
+      }
+    };
+
+    //$scope.normalize();
   }
 ]);
