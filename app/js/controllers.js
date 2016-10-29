@@ -6,21 +6,22 @@ var compareControllers = angular.module('compareControllers', [
 
 compareControllers.controller('InitController', ['$scope',
   function($scope) {
-    $scope.minSpareRows = 0;
-    $scope.colHeaders = false;
     $scope.db = {};
     $scope.db.items = [
       ['','Horsepower', 'MSRP','0-60','Length','Width','Rear legroom'],
-      ['Audi S3',292,47995.00,4.80,175.4,70,35.1],
       ['Audi S4',333,57370.00,4.90,185.7,71.9,35.20],
-      ['Audi A3',220,33540.00,5.4,175.4,70,35.1],
-      ['Audi A4',220,43875.00,5.6,185.1,71.9,35.20],
-      ['Mercedes C300',241,45000.00,6.1,184.5,71.3,35.20],
-      ['Mercedes C450',360,55205.00,4.70,184.5,71.3,35.20],
+      ['Audi S5',333,61965.00,4.80,182.7,73,31.70],
+      ['Audi A6',310,58600.00,5.40,193.9,73.8,37.40],
+      ['Audi A4',220,43875.00,5.60,185.1,71.9,35.20],
+      ['Audi A5',220,5025.00,6.60,182.1,73,31.70],
+      ['Mercedes C400',329,55205.00,4.70,184.5,71.3,35.20],
       ['Mercedes E350',302,63930.00,6.10,192.1,73,35.80],
+      ['BMW 328i X GT',240,50150.00,5.90,190,72,39.20],
+      ['BMW 335i X GT',300,62275.00,5.20,190,72,39.20],
       ['BMW 328i X',240,42950.00,5.60,182.5,71.3,35.10],
       ['BMW 335i X',300,60715.00,4.60,182.5,71.3,35.10],
-      ['BMW 428i GC',240,53525.00,5.50,182.5,71.8,33.70]
+      ['BMW 428i GC',240,53525.00,5.50,182.5,71.8,33.70],
+      ['BMW 535i X',302,69675.00,5.30,193.4,73.2,35.30]
     ];
 
     $scope.afterChange = function() {
@@ -31,13 +32,10 @@ compareControllers.controller('InitController', ['$scope',
       }
     };
 
-    $scope.afterRemoveRow = function() {
-      $scope.afterChange();
-    }
-
-    $scope.afterRemoveCol = function() {
-      $scope.afterChange();
-    }
+    $scope.afterInit = function() {
+      console.log('afterInit');
+      $scope.ht = this;
+    };
 
     $scope.normalize = function() {
       var data = new Array();
@@ -95,8 +93,8 @@ compareControllers.controller('InitController', ['$scope',
       for(; i < length; i++) {
         $scope.db.attributes.push({
           "name":$scope.db.items[0][i],
-          "weight":1,
-          "order":"larger"
+          "weight":0,
+          "order":"desc"
         });
       }
       console.log('attributes',$scope.db.attributes);
@@ -118,23 +116,27 @@ compareControllers.controller('InitController', ['$scope',
         for(; y < cols; y++) {
           var value = data[x][y];
           var weight = $scope.db.attributes[y-1].weight;
-          if ($scope.db.attributes[y-1].order == "smaller") {
+          if ($scope.db.attributes[y-1].order == "asc") {
             score -= value*weight;
           } else {
             score += value*weight;
           }
         }
-        $scope.db.scores.push({name:data[x][0], score:Number(score.toFixed(4))});
+        $scope.db.scores.push({
+          name:data[x][0],
+          score:Number(score.toFixed(4)),
+          index:x+1
+        });
       }
       console.log('scores', $scope.db.scores);
     };
 
     $scope.toggleAttributeOrder = function(index) {
       console.log("toggleAttributeOrder", $scope.db.attributes[index].order);
-      if ($scope.db.attributes[index].order == "smaller") {
-        $scope.db.attributes[index].order = "larger";
+      if ($scope.db.attributes[index].order == "asc") {
+        $scope.db.attributes[index].order = "desc";
       } else {
-        $scope.db.attributes[index].order = "smaller";
+        $scope.db.attributes[index].order = "asc";
       }
       $scope.score();
     };
@@ -152,5 +154,10 @@ compareControllers.controller('InitController', ['$scope',
         $scope.score();
       }
     };
+
+    $scope.highlight = function(index) {
+      var cols = jStat.cols($scope.db.items);
+      $scope.ht.selectCell(index, 0, index, cols-1);
+    }
   }
 ]);

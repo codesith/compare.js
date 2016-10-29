@@ -1,48 +1,65 @@
+
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-6">
-      <hot-table
-        id="items"
-        settings="{contextMenu: ['row_above', 'row_below', 'remove_row', 'col_right', 'col_left', 'remove_col']}"
-        colHeaders="colHeaders"
-        minSpareRows="minSpareRows"
-        datarows="db.items"
-        height="400"
-        width="700"
-        afterChange: afterChange
-        afterRemoveRow: afterRemoveRow
-        afterRemoveCol: afterRemoveCol
-        >
-      </hot-table>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <b><span>Data table (click to edit, right click to add/remove entire row or column)</span></b>
+            <hot-table
+              id="items"
+              settings="{contextMenu: ['row_above', 'row_below', 'remove_row', 'col_right', 'col_left', 'remove_col']}"
+              colHeaders="false"
+              rowHeaders="false"
+              minSpareRows="0"
+              fixedColumnsLeft="1"
+              fixedRowsTop="1"
+              datarows="db.items"
+              height="400"
+              width="800"
+              afterChange="afterChange"
+              afterRemoveRow="afterChange"
+              afterRemoveCol="afterChange"
+              afterInit="afterInit"
+              >
+            </hot-table>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-8">
+            <b><span>Comparision tool</span></b>
+            <table class="table table-condensed table-striped">
+              <tr>
+                <th> </th>
+                <th>Click to toggle</th>
+                <th>Importance (0 to 5)</th>
+              </tr>
+              <tr ng-repeat="attribute in db.attributes track by $index">
+                <td>{{attribute.name}}</td>
+                <td><a style="cursor:pointer;" ng-click="toggleAttributeOrder($index)">{{(attribute.order=='asc'?'Asc':'Desc')}}</a></td>
+                <td>
+                  <div style="float:left;padding-right:5px"><a style="cursor:pointer;" ng-click="decreaseWeight($index)">-</a></div>
+                  <div style="float:left;width:30px;"><p style="cursor:pointer;" align="center">{{attribute.weight}}<p/></div>
+                  <div style="padding-left:5px"><a style="cursor:pointer;" ng-click="increaseWeight($index)">+</a></div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+      </div>
     </div>
     <div class="col-md-3">
-      <ul>
-        <li ng-repeat="item in db.scores | orderBy:'-score'">
-          <p>{{item.name}}</p>
-        </li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
-      <span>Comparision tool</span>
-      <table class="table">
-        <tr>
-          <th> </th>
-          <th>Want larger or smaller? (click to toggle)</th>
-          <th>How important? (0 to 5)</th>
-        </tr>
-        <tr ng-repeat="attribute in db.attributes track by $index">
-          <td>{{attribute.name}}</td>
-          <td><a style="cursor:pointer;" ng-click="toggleAttributeOrder($index)">{{attribute.order}}</a></td>
-          <td>
-            <div style="float:left;padding-right:5px"><a style="cursor:pointer;" ng-click="decreaseWeight($index)">-</a></div>
-            <div style="float:left;width:30px;"><p style="cursor:pointer;" align="center">{{attribute.weight}}<p/></div>
-            <div style="padding-left:5px"><a style="cursor:pointer;" ng-click="increaseWeight($index)">+</a></div>
-          </td>
+      <b><span>Scores (Click to highlight in data table)</span></b>
+      <table class="table table-condensed table-striped">
+        <tr ng-repeat="item in db.scores | orderBy:'-score'" ng-click="highlight(item.index)">
+          <td style="padding:2px"><p style="margin-bottom:0px">{{item.name}}</p></td>
+          <td style="padding:2px"><p style="margin-bottom:0px">{{item.score}}</p></td>
         </tr>
       </table>
     </div>
   </div>
+
+
 </div>
