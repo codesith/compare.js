@@ -5,7 +5,8 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-md-12">
-            <b><span>Data table (click to edit, right click to add/remove entire row or column)</span></b>
+            <b><span>Data Table</span></b>
+            <span>(click to edit, right click to add/remove entire row or column)</span>
             <hot-table
               id="items"
               settings="{contextMenu: ['row_above', 'row_below', 'remove_row', 'col_right', 'col_left', 'remove_col']}"
@@ -28,7 +29,7 @@
 
         <div class="row">
           <div class="col-md-8">
-            <b><span>Comparision tool</span></b>
+            <b><span>Comparision Tool</span></b>
             <table class="table table-condensed table-striped">
               <tr>
                 <th> </th>
@@ -51,7 +52,8 @@
       </div>
     </div>
     <div class="col-md-3">
-      <b><span>Scores (Click to highlight in data table)</span></b>
+      <b><span>Scores</span></b>
+      <span>(Click to highlight in data table)</span>
       <table class="table table-condensed table-striped">
         <tr ng-repeat="item in db.scores | orderBy:'-score'" ng-click="highlight(item.index)">
           <td style="padding:2px"><p style="margin-bottom:0px">{{item.name}}</p></td>

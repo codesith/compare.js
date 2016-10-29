@@ -8,7 +8,7 @@ compareControllers.controller('InitController', ['$scope',
   function($scope) {
     $scope.db = {};
     $scope.db.items = [
-      ['','Horsepower', 'MSRP','0-60','Length','Width','Rear legroom'],
+      ['','Horsepower', 'MSRP','0-60','Length','Width','Rear Legroom'],
       ['Audi S4',333,57370.00,4.90,185.7,71.9,35.20],
       ['Audi S5',333,61965.00,4.80,182.7,73,31.70],
       ['Audi A6',310,58600.00,5.40,193.9,73.8,37.40],
@@ -23,7 +23,14 @@ compareControllers.controller('InitController', ['$scope',
       ['BMW 428i GC',240,53525.00,5.50,182.5,71.8,33.70],
       ['BMW 535i X',302,69675.00,5.30,193.4,73.2,35.30]
     ];
-
+    $scope.db.attributeReference = {
+      'Horsepower':{order:'desc',weight:0},
+      'MSRP':{order:'asc',weight:1},
+      '0-60':{order:'asc',weight:2},
+      'Length':{order:'asc',weight:1},
+      'Width':{order:'asc',weight:1},
+      'Rear Legroom':{order:'desc',weight:2}
+    }
     $scope.afterChange = function() {
       console.log('afterChange', $scope.db.items);
       $scope.normalize();
@@ -93,8 +100,8 @@ compareControllers.controller('InitController', ['$scope',
       for(; i < length; i++) {
         $scope.db.attributes.push({
           "name":$scope.db.items[0][i],
-          "weight":0,
-          "order":"desc"
+          "weight":$scope.db.attributeReference[$scope.db.items[0][i]].weight,
+          "order":$scope.db.attributeReference[$scope.db.items[0][i]].order
         });
       }
       console.log('attributes',$scope.db.attributes);
