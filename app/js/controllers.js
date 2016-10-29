@@ -8,28 +8,25 @@ compareControllers.controller('InitController', ['$scope',
   function($scope) {
     $scope.db = {};
     $scope.db.items = [
-      ['','Horsepower', 'MSRP','0-60','Length','Width','Rear Legroom'],
-      ['Audi S4',333,57370.00,4.90,185.7,71.9,35.20],
-      ['Audi S5',333,61965.00,4.80,182.7,73,31.70],
-      ['Audi A6',310,58600.00,5.40,193.9,73.8,37.40],
-      ['Audi A4',220,43875.00,5.60,185.1,71.9,35.20],
-      ['Audi A5',220,5025.00,6.60,182.1,73,31.70],
-      ['Mercedes C400',329,55205.00,4.70,184.5,71.3,35.20],
-      ['Mercedes E350',302,63930.00,6.10,192.1,73,35.80],
-      ['BMW 328i X GT',240,50150.00,5.90,190,72,39.20],
-      ['BMW 335i X GT',300,62275.00,5.20,190,72,39.20],
-      ['BMW 328i X',240,42950.00,5.60,182.5,71.3,35.10],
-      ['BMW 335i X',300,60715.00,4.60,182.5,71.3,35.10],
-      ['BMW 428i GC',240,53525.00,5.50,182.5,71.8,33.70],
-      ['BMW 535i X',302,69675.00,5.30,193.4,73.2,35.30]
+      ['',                'Horsepower',   'MSRP',   '0-60',   'Length',   'Width',  'Rear Legroom', 'MPG City', 'MPG Highway'],
+      ['Audi S3',         292,            42900,    4.4,      176,        71,       35.1,           21,         28],
+      ['Audi S4',         333,            50200,    4.9,      185.7,      71.9,     35.2,           18,         28],
+      ['Audi A4',         252,            39400,    5.2,      185.7,      71.9,     35.2,           24,         31],
+      ['Audi S5',         333,            53100,    4.9,      182.7,      73,       31.7,           17,         26],
+      ['Mercedes C43',    329,            52000,    4.7,      185.1,      71.3,     35.2,           21,         29],
+      ['Mercedes C300',   241,            39500,    6.2,      185.1,      71.3,     35.2,           23,         30],
+      ['BMW 330i X',      248,            40750,    5.4,      182.8,      71.3,     35.1,           23,         33],
+      ['BMW 340i X',      248,            49900,    4.9,      182.8,      71.3,     35.1,           21,         32],
     ];
     $scope.db.attributeReference = {
       'Horsepower':{order:'desc',weight:0},
-      'MSRP':{order:'asc',weight:1},
-      '0-60':{order:'asc',weight:2},
-      'Length':{order:'asc',weight:1},
+      'MSRP':{order:'asc',weight:0},
+      '0-60':{order:'asc',weight:3},
+      'Length':{order:'asc',weight:0},
       'Width':{order:'asc',weight:1},
-      'Rear Legroom':{order:'desc',weight:2}
+      'Rear Legroom':{order:'desc',weight:1},
+      'MPG City':{order:'desc', weight:1},
+      'MPG Highway':{order:'desc', weight:0}
     }
     $scope.afterChange = function() {
       console.log('afterChange', $scope.db.items);
