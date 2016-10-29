@@ -38,9 +38,9 @@
               </tr>
               <tr ng-repeat="attribute in db.attributes track by $index">
                 <td style="padding:2px">{{attribute.name}}</td>
-                <td style="padding:2px"><a style="cursor:pointer;" ng-click="toggleAttributeOrder($index)">{{(attribute.order=='asc'?'Asc':'Desc')}}</a></td>
+                <td style="padding:2px;padding-left:15px"><a style="cursor:pointer;" ng-click="toggleAttributeOrder($index)">{{(attribute.order=='asc'?'Asc':'Desc')}}</a></td>
                 <td style="padding:2px">
-                  <div style="float:left;padding:5px"><a style="cursor:pointer;" ng-click="decreaseWeight($index)">-</a></div>
+                  <div style="float:left;padding-left:5px"><a style="cursor:pointer;" ng-click="decreaseWeight($index)">-</a></div>
                   <div style="float:left;width:30px;"><p style="cursor:pointer;" align="center">{{attribute.weight}}<p/></div>
                   <div style="padding-left:5px"><a style="cursor:pointer;" ng-click="increaseWeight($index)">+</a></div>
                 </td>
