@@ -8,28 +8,30 @@ compareControllers.controller('InitController', ['$scope',
   function($scope) {
     $scope.db = {};
     $scope.db.items = [
-      ['',                'Horsepower',   'MSRP',   '0-60',   'Length',   'Width',  'Rear Legroom', 'MPG City', 'MPG Highway'],
-      ['Audi S3',         292,            42900,    4.4,      176,        71,       35.1,           21,         28],
-      ['Audi S4',         333,            50200,    4.9,      185.7,      71.9,     35.2,           18,         28],
-      ['Audi A4',         252,            39400,    5.2,      185.7,      71.9,     35.2,           24,         31],
-      ['Audi S5',         333,            53100,    4.9,      182.7,      73,       31.7,           17,         26],
-      ['Mercedes C43',    329,            52000,    4.7,      185.1,      71.3,     35.2,           21,         29],
-      ['Mercedes C300',   241,            39500,    6.2,      185.1,      71.3,     35.2,           23,         30],
-      ['BMW 330i X',      248,            40750,    5.4,      182.8,      71.3,     35.1,           23,         33],
-      ['BMW 340i X',      248,            49900,    4.9,      182.8,      71.3,     35.1,           21,         32],
+      ['',                'Horsepower',   'MSRP',     '0-60',   'Length',   'Width',  'Rear Legroom', 'MPG City', 'MPG Highway'],
+      ['Audi S3',         292,            42900.00,   4.4,      176,        71,       35.1,           21,         28],
+      ['Audi A3 e-tron',  204,            39850.00,   6.5,      176,        71,       35.1,           86,         86],
+      ['Audi S4',         333,            50200.00,   4.9,      185.7,      71.9,     35.2,           18,         28],
+      ['Audi A4',         252,            39400.00,   5.2,      185.7,      71.9,     35.2,           24,         31],
+      ['Audi S5',         333,            53100.00,   4.9,      182.7,      73,       31.7,           17,         26],
+      ['Mercedes CLA45',  375,            49950.00,   4.2,      183.8,      70,       27.1,           23,         30],
+      ['Mercedes C43',    362,            52000.00,   4.7,      185.1,      71.3,     35.2,           21,         29],
+      ['Mercedes C300',   241,            41500.00,   6.2,      185.1,      71.3,     35.2,           23,         30],
+      ['BMW 330i X',      248,            40750.00,   5.4,      182.8,      71.3,     35.1,           23,         33],
+      ['BMW 340i X',      248,            49900.00,   4.9,      182.8,      71.3,     35.1,           21,         32],
     ];
     $scope.db.attributeReference = {
-      'Horsepower':{order:'desc',weight:0},
-      'MSRP':{order:'asc',weight:0},
-      '0-60':{order:'asc',weight:3},
-      'Length':{order:'asc',weight:0},
-      'Width':{order:'asc',weight:1},
-      'Rear Legroom':{order:'desc',weight:1},
-      'MPG City':{order:'desc', weight:1},
-      'MPG Highway':{order:'desc', weight:0}
+      'Horsepower':   {order:'desc',  weight:3},
+      'MSRP':         {order:'asc',   weight:0},
+      '0-60':         {order:'asc',   weight:3},
+      'Length':       {order:'asc',   weight:0},
+      'Width':        {order:'asc',   weight:1},
+      'Rear Legroom': {order:'desc',  weight:3},
+      'MPG City':     {order:'desc',  weight:3},
+      'MPG Highway':  {order:'desc',  weight:0}
     }
     $scope.afterChange = function() {
-      console.log('afterChange', $scope.db.items);
+      //console.log('afterChange', $scope.db.items);
       $scope.normalize();
       if(!$scope.$$phase) {
         $scope.$apply();
